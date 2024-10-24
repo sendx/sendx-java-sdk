@@ -1,0 +1,1990 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@sendx.io
+    name: SendX Dev Team
+  description: |
+    # Introduction SendX is an email marketing product. It helps you convert website visitors to customers, send them promotional emails, engage with them using drip sequences and craft custom journeys using powerful but simple automations. The SendX API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+    The SendX Rest API doesn’t support bulk updates. You can work on only one object per request. <br>
+  title: SendX REST API
+  version: 1.0.0
+servers:
+- description: Production server
+  url: https://api.sendx.io/api/v1/rest
+- description: Staging server
+  url: https://stag.sendx.io/api/v1/rest
+- description: Local server
+  url: http://localhost:8080/api/v1/rest
+security:
+- apiKeyAuth: []
+tags:
+- description: "Operations related to managing tags such as create, update, delete,\
+    \ and retrieve tags."
+  name: Tags
+- description: Operations for managing campaigns in the system.
+  name: Campaign
+- name: Contact
+paths:
+  /contact:
+    get:
+      description: Find all contacts with optional filters
+      operationId: getAllContacts
+      parameters:
+      - description: Offset for pagination
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - description: Limit for pagination
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Filter contacts by type
+        explode: true
+        in: query
+        name: contactType
+        required: false
+        schema:
+          enum:
+          - all
+          - unsubscribed
+          - bounced
+          - markedspam
+          type: string
+        style: form
+      - description: Search term to filter contacts
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Contact'
+                type: array
+          description: List of Contacts
+        "401":
+          description: Not Authorized
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Get All Contacts
+      tags:
+      - Contact
+      x-accepts:
+      - application/json
+    post:
+      description: Create Contact with given data
+      operationId: createContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+          description: Contact Created Successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Create a contact
+      tags:
+      - Contact
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /contact/{contactId}:
+    delete:
+      description: Deletes Contact
+      operationId: deleteContact
+      parameters:
+      - description: The Contact ID to delete
+        explode: false
+        in: path
+        name: contactId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+          description: Contact deleted successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Contact ID is empty
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Delete Contact
+      tags:
+      - Contact
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a specific contact by its contactId.
+      operationId: getContactById
+      parameters:
+      - description: The ID of the contact to retrieve.
+        explode: false
+        in: path
+        name: contactId
+        required: true
+        schema:
+          example: sendxid123
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: Retrieved contact successfully.
+        "401":
+          description: Not Authorized - Invalid or missing API key.
+        "406":
+          description: Contact ID is empty or invalid.
+        "422":
+          description: Request body is not in proper format.
+        "500":
+          description: Internal Server Error - Something went wrong on the server.
+      summary: Get Contact by ID
+      tags:
+      - Contact
+      x-accepts:
+      - application/json
+    put:
+      description: Update Contact with given data
+      operationId: updateContact
+      parameters:
+      - description: The ID of the Contact to update
+        explode: false
+        in: path
+        name: contactId
+        required: true
+        schema:
+          example: sendxid123
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+          description: Contact Updated Successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Update Contact
+      tags:
+      - Contact
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /contact/unsubscribe/{contactId}:
+    post:
+      description: Unsubscribe a globally existing contact
+      operationId: unsubscribeContact
+      parameters:
+      - description: The Contact ID to unsubscribe
+        explode: false
+        in: path
+        name: contactId
+        required: true
+        schema:
+          example: sendx123
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+          description: Contact successfully unsubscribed
+        "401":
+          description: Not Authorized
+        "406":
+          description: Contact ID is empty or invalid
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Unsubscribe Contact
+      tags:
+      - Contact
+      x-accepts:
+      - application/json
+  /campaign:
+    get:
+      description: Retrieve a list of all campaigns.
+      operationId: getAllCampaigns
+      parameters:
+      - description: Offset for pagination
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - description: Limit for pagination
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      - description: Search term to filter campaigns
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Campaign'
+                type: array
+          description: Retrieved campaigns successfully.
+        "401":
+          description: Not Authorized - Invalid or missing API key.
+        "500":
+          description: Internal Server Error - Something went wrong on the server.
+      summary: Get All Campaigns
+      tags:
+      - Campaign
+      x-accepts:
+      - application/json
+    post:
+      description: Create a new email campaign
+      operationId: createCampaign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequest'
+        description: The campaign content
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+          description: Campaign Created Successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Create Campaign
+      tags:
+      - Campaign
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /campaign/{campaignId}:
+    delete:
+      description: Deletes a specific campaign by its campaignId.
+      operationId: deleteCampaign
+      parameters:
+      - description: The ID of the campaign to delete
+        explode: false
+        in: path
+        name: campaignId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: 123
+                message: Campaign (Test Campaign) has been deleted successfully
+              schema:
+                $ref: '#/components/schemas/deleteCampaign_200_response'
+          description: Campaign deleted successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Campaign ID is empty
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Err
+      summary: Delete Campaign
+      tags:
+      - Campaign
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a specific campaign using its ID.
+      operationId: getCampaignById
+      parameters:
+      - description: The ID of the campaign to retrieve.
+        explode: false
+        in: path
+        name: campaignId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+          description: Retrieved campaign successfully.
+        "401":
+          description: Not Authorized - Invalid or missing API key.
+        "406":
+          description: Not Acceptable - Request not acceptable.
+        "403":
+          description: Forbidden - Tag with name already exists.
+        "422":
+          description: Request body is not in proper format.
+        "500":
+          description: Internal Server Error - Something went wrong on the server.
+      summary: Get Campaign By Id
+      tags:
+      - Campaign
+      x-accepts:
+      - application/json
+    put:
+      description: Submit edited content for a specific campaign.
+      operationId: editCampaign
+      parameters:
+      - description: The ID of the campaign to edit
+        explode: false
+        in: path
+        name: campaignId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+          description: Campaign edited successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Not Acceptable
+        "403":
+          description: Forbidden - Tag with name already exists
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Edit Campaign
+      tags:
+      - Campaign
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /list:
+    get:
+      description: Retrieve all lists for the account.
+      operationId: getAllLists
+      parameters:
+      - description: Offset for pagination.
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: Limit the number of results returned.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          example: 10
+          type: integer
+        style: form
+      - description: Search term to filter lists.
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          example: Marketing
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ListModel'
+                type: array
+          description: Retrieved all Lists for account successfully
+        "401":
+          description: Not Authorized
+        "500":
+          description: Internal Server Error
+      summary: Get All Lists
+      tags:
+      - List
+      x-accepts:
+      - application/json
+    post:
+      description: Create a new list.
+      operationId: createList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+          description: List Created Successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Create List
+      tags:
+      - List
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /list/{listId}:
+    delete:
+      description: Deletes a specific list by its ID.
+      operationId: deleteList
+      parameters:
+      - description: The ID of the list you want to delete
+        explode: false
+        in: path
+        name: listId
+        required: true
+        schema:
+          example: sendx123
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+          description: List deleted successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: listId is empty
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Delete List
+      tags:
+      - List
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a specific list by its ID.
+      operationId: getListById
+      parameters:
+      - description: The ID of the list you want to retrieve
+        explode: false
+        in: path
+        name: listId
+        required: true
+        schema:
+          example: sendx123
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModel'
+          description: Successfully retrieved the list
+        "401":
+          description: Not Authorized
+        "406":
+          description: Not Acceptable
+        "403":
+          description: Forbidden Tag with name already exists
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Get List
+      tags:
+      - List
+      x-accepts:
+      - application/json
+    put:
+      description: Update an existing list by its ID.
+      operationId: updateList
+      parameters:
+      - description: The ID of the list to be updated.
+        explode: false
+        in: path
+        name: listId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+          description: List Updated Successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Update List
+      tags:
+      - List
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /tag:
+    get:
+      description: Retrieve all tags for the account with optional pagination and
+        search filters
+      operationId: getAllTags
+      parameters:
+      - description: Offset for pagination
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Limit the number of results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Search term to filter tags
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Tag'
+                type: array
+          description: Retrieved all tags successfully
+        "401":
+          description: Not Authorized
+        "500":
+          description: Internal Server Error
+      summary: Get All Tags
+      tags:
+      - Tags
+      x-accepts:
+      - application/json
+    post:
+      description: Create a new tag for the account
+      operationId: createTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+        description: The tag content
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+          description: Tag created successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with this name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Create a Tag
+      tags:
+      - Tags
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /tag/{tagId}:
+    delete:
+      description: Delete an existing tag by ID
+      operationId: deleteTag
+      parameters:
+      - description: ID of the tag to delete
+        explode: false
+        in: path
+        name: tagId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+          description: Tag deleted successfully
+        "401":
+          description: Not Authorized
+        "406":
+          description: Tag ID is empty
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Delete a Tag
+      tags:
+      - Tags
+      x-accepts:
+      - application/json
+    get:
+      description: Retrieve a tag based on the provided tag ID
+      operationId: getTagById
+      parameters:
+      - description: ID of the tag you want to fetch
+        explode: false
+        in: path
+        name: tagId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: Successful response with the tag details
+        "401":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Not Authorized
+        "403":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Forbidden - Tag with the same name already exists
+        "406":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Not Acceptable
+        "422":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Request body is not in proper format
+        "500":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Internal Server Error
+      summary: Get a Tag by ID
+      tags:
+      - Tags
+      x-accepts:
+      - application/json
+      - text/plain
+    put:
+      description: Update an existing tag
+      operationId: updateTag
+      parameters:
+      - description: ID of the tag to update
+        explode: false
+        in: path
+        name: tagId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagRequest'
+        description: The tag content
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+          description: Tag updated successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with this name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Update a Tag
+      tags:
+      - Tags
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /report/campaign/{campaignId}:
+    get:
+      description: Retrieve the campaign report data based on the provided campaign
+        id.
+      operationId: getCampaignReport
+      parameters:
+      - description: The ID of the campaign to retrieve the report data for
+        explode: false
+        in: path
+        name: campaignId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Type of integration for the report data (optional)
+        explode: true
+        in: query
+        name: integrationType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportData'
+          description: Get Report Data Successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden Tag with name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Request body is not in proper format
+        "500":
+          description: Internal Server Error
+      summary: Get CampaignReport Data
+      tags:
+      - Reports
+      x-accepts:
+      - application/json
+  /sender:
+    get:
+      description: "Retrieve all senders for the team, with optional filters like\
+        \ offset, limit, and search."
+      operationId: getAllSenders
+      parameters:
+      - description: Number of records to skip
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - description: Maximum number of records to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Search keyword to filter senders by name or email
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SenderResponse'
+                type: array
+          description: Retrieved all senders for team successfully
+        "401":
+          description: Not Authorized
+        "500":
+          description: Internal Server Error
+      summary: Get All Senders
+      tags:
+      - Sender
+      x-accepts:
+      - application/json
+    post:
+      description: Creates a new sender in the system.
+      operationId: createSender
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SenderRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sender'
+          description: Sender Created Successfully
+        "401":
+          description: Not Authorized
+        "403":
+          description: Forbidden - Tag with name already exists
+        "406":
+          description: Not Acceptable
+        "422":
+          description: Unprocessable Entity - Request body is not in the proper format
+        "500":
+          description: Internal Server Error
+      summary: Create Sender
+      tags:
+      - Sender
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    ContactRequest:
+      description: Schema for the contact request payload. Used for creating or updating
+        a contact.
+      example:
+        firstName: Jane
+        lastName: Doe
+        customFields:
+          "1": VIP
+          "2": Special Offer Subscriber
+        lists:
+        - sendx123
+        - sendx233
+        lastTrackedIp: 34.94.159.140
+        company: Tech Solutions Inc.
+        email: jane.doe@example.com
+        tags:
+        - "223"
+        - "3232"
+      properties:
+        email:
+          description: The email address of the contact. Must be a valid email.
+          example: jane.doe@example.com
+          format: email
+          type: string
+        firstName:
+          description: The first name of the contact.
+          example: Jane
+          type: string
+        lastName:
+          description: The last name of the contact.
+          example: Doe
+          type: string
+        company:
+          description: The company where the contact works.
+          example: Tech Solutions Inc.
+          type: string
+        lastTrackedIp:
+          description: The last known IP address of the contact.
+          example: 34.94.159.140
+          type: string
+        customFields:
+          additionalProperties:
+            type: string
+          description: "Custom fields specific to the contact, which may vary by account."
+          example:
+            "1": VIP
+            "2": Special Offer Subscriber
+          type: object
+        lists:
+          description: A list of `lists` ids the contact is subscribed to.
+          example:
+          - sendx123
+          - sendx233
+          items:
+            type: string
+          type: array
+        tags:
+          description: Tag ids associated with the contact for segmentation or categorization.
+          example:
+          - "223"
+          - "3232"
+          items:
+            type: string
+          type: array
+      type: object
+    Contact:
+      example:
+        lastName: Doe
+        customFields:
+          "1": VIP
+          "2": Special Offer Subscriber
+        created: 2024-10-08T09:30:00Z
+        dropped: false
+        lastTrackedIp: 192.168.0.1
+        bounced: false
+        LTV: 5000
+        tags:
+        - "223"
+        - "3232"
+        firstName: Jane
+        unsubscribed: false
+        contactSource: 8
+        blocked: false
+        lists:
+        - sendx123
+        - sendx233
+        company: Tech Solutions Inc.
+        id: a1b2c3d4e5
+        spam: false
+        updated: 2024-10-08T12:45:00Z
+        email: jane.doe@example.com
+      properties:
+        id:
+          description: Identifier for the contact.
+          example: a1b2c3d4e5
+          type: string
+        firstName:
+          description: The first name of the contact.
+          example: Jane
+          type: string
+        lastName:
+          description: The last name of the contact.
+          example: Doe
+          type: string
+        email:
+          description: The email address of the contact.
+          example: jane.doe@example.com
+          format: email
+          type: string
+        company:
+          description: The company of the contact.
+          example: Tech Solutions Inc.
+          type: string
+        customFields:
+          additionalProperties:
+            type: string
+          description: Custom fields and their values
+          example:
+            "1": VIP
+            "2": Special Offer Subscriber
+          type: object
+        unsubscribed:
+          description: Indicates if the contact has unsubscribed from emails.
+          example: false
+          type: boolean
+        bounced:
+          description: Indicates if the contact's email has bounced.
+          example: false
+          type: boolean
+        spam:
+          description: Indicates if the contact marked the email as spam.
+          example: false
+          type: boolean
+        created:
+          description: The date and time when the contact was created.
+          example: 2024-10-08T09:30:00Z
+          format: date-time
+          type: string
+        updated:
+          description: The date and time when the contact was last updated.
+          example: 2024-10-08T12:45:00Z
+          format: date-time
+          type: string
+        blocked:
+          description: Indicates if the contact is blocked from receiving emails.
+          example: false
+          type: boolean
+        dropped:
+          description: Indicates if emails to this contact were dropped.
+          example: false
+          type: boolean
+        LTV:
+          description: Lifetime value (LTV) of the contact in currency units.
+          example: 5000
+          type: integer
+        contactSource:
+          description: |
+            The source from which the contact was added. Possible values:
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+          - 16
+          - 17
+          - 18
+          - 19
+          example: 8
+          type: integer
+        lastTrackedIp:
+          description: The last known IP address tracked for the contact.
+          example: 192.168.0.1
+          type: string
+        lists:
+          description: A list of `lists` ids the contact is subscribed to.
+          example:
+          - sendx123
+          - sendx233
+          items:
+            type: string
+          type: array
+        tags:
+          description: '`Tag` ids associated with the contact for segmentation or
+            categorization.'
+          example:
+          - "223"
+          - "3232"
+          items:
+            type: string
+          type: array
+      type: object
+    OperationResponse:
+      example:
+        data: data
+        message: message
+        status: status
+      properties:
+        status:
+          description: The status of the response.
+          type: string
+        message:
+          description: A message indicating the result of the operation.
+          type: string
+        data:
+          description: Additional data associated with the response.
+          type: string
+      type: object
+    CampaignRequest:
+      example:
+        subject: New Year Offer
+        timezone: America/New_York
+        htmlCode: <html><body><h1>Happy New Year!</h1></body></html>
+        excludedTags:
+        - tag_3
+        preferredTimeCondition: Send at 9 AM
+        scheduleCondition: 2025-01-21
+        sendInContactsTimezone: true
+        includedLists:
+        - list_1
+        - list_2
+        includedSegments:
+        - segment_1
+        - segment_2
+        excludedLists:
+        - list_3
+        preferredTimezone: America/Los_Angeles
+        scheduleType: 1
+        sender: sender_123
+        includedTags:
+        - tag_1
+        - tag_2
+        name: New Year Promotion
+        previewText: Exclusive New Year promotions inside
+        smartSend: true
+        excludedSegments:
+        - segment_3
+        timeCondition: 10:00 AM
+      properties:
+        name:
+          description: The name of the campaign.
+          example: New Year Promotion
+          type: string
+        htmlCode:
+          description: The HTML code of the campaign.
+          example: <html><body><h1>Happy New Year!</h1></body></html>
+          type: string
+        subject:
+          description: The subject of the campaign.
+          example: New Year Offer
+          type: string
+        sender:
+          description: Sender unique identifier.
+          example: sender_123
+          type: string
+        previewText:
+          description: The preview text shown in email clients.
+          example: Exclusive New Year promotions inside
+          type: string
+        scheduleType:
+          description: |
+            The type of scheduling for the campaign <br> 0: Send Now <br> 1: Send Later
+          enum:
+          - 0
+          - 1
+          example: 1
+          type: integer
+        scheduleCondition:
+          description: The condition for scheduling the campaign.
+          example: 2025-01-21
+          type: string
+        timeCondition:
+          description: The specific time to send the campaign.
+          example: 10:00 AM
+          type: string
+        timezone:
+          description: The timezone for the campaign scheduling.
+          example: America/New_York
+          type: string
+        preferredTimezone:
+          description: Preferred timezone for scheduling.
+          example: America/Los_Angeles
+          type: string
+        preferredTimeCondition:
+          description: Specific time preference for sending the campaign.
+          example: Send at 9 AM
+          type: string
+        sendInContactsTimezone:
+          description: Whether to send emails in each contact's timezone.
+          example: true
+          type: boolean
+        smartSend:
+          description: "Whether to enable smart send features (e.g., optimizing send\
+            \ time)."
+          example: true
+          type: boolean
+        includedSegments:
+          description: List of segment IDs to include.
+          example:
+          - segment_1
+          - segment_2
+          items:
+            type: string
+          type: array
+        includedLists:
+          description: List of list IDs to include.
+          example:
+          - list_1
+          - list_2
+          items:
+            type: string
+          type: array
+        includedTags:
+          description: List of tag IDs to include.
+          example:
+          - tag_1
+          - tag_2
+          items:
+            type: string
+          type: array
+        excludedSegments:
+          description: List of segment IDs to exclude.
+          example:
+          - segment_3
+          items:
+            type: string
+          type: array
+        excludedLists:
+          description: List of list IDs to exclude.
+          example:
+          - list_3
+          items:
+            type: string
+          type: array
+        excludedTags:
+          description: List of tag IDs to exclude.
+          example:
+          - tag_3
+          items:
+            type: string
+          type: array
+      required:
+      - HtmlCode
+      - Name
+      - Sender
+      - Subject
+      type: object
+    ListModel:
+      example:
+        thankYouSender: info@example.com
+        confirmMailMessage: Click the link below to confirm your subscription.
+        thankYouMailSubject: Thank You for Subscribing!
+        confirmFromEmail: john.doe@example.com
+        confirmMailSubject: Please Confirm Your Subscription
+        created: 2024-10-01T12:34:56Z
+        thankYouFromEmail: john.doe@example.com
+        confirmSender: confirmSender
+        type: 0
+        thankYouFromName: John Doe
+        confirmFromName: John Doe
+        name: Newsletter Subscribers
+        id: encrypted_list_id
+        sendThankYouMail: true
+        confirmSuccessPage: https://example.com/confirmation-success
+        updated: 2024-10-10T14:30:00Z
+        thankYouMailMessage: We appreciate your subscription!
+      properties:
+        id:
+          description: Encrypted ID of the list
+          example: encrypted_list_id
+          type: string
+        name:
+          description: Name of the list
+          example: Newsletter Subscribers
+          type: string
+        type:
+          description: "Type of the list representing opt-in methods (1: Single Opt-In,\
+            \ 2: Double Opt-In)"
+          enum:
+          - 0
+          - 1
+          example: 0
+          type: integer
+        sendThankYouMail:
+          description: Indicates if a thank-you email should be sent
+          example: true
+          type: boolean
+        thankYouFromName:
+          description: Name displayed as the sender in the thank-you email
+          example: John Doe
+          type: string
+        thankYouFromEmail:
+          description: Email address from which the thank-you email is sent
+          example: john.doe@example.com
+          format: email
+          type: string
+        thankYouMailSubject:
+          description: Subject line of the thank-you email
+          example: Thank You for Subscribing!
+          type: string
+        thankYouMailMessage:
+          description: Plain text message body of the thank-you email
+          example: We appreciate your subscription!
+          type: string
+        thankYouSender:
+          description: Details of the sender of the thank-you email
+          example: info@example.com
+          type: string
+        confirmFromName:
+          description: Name displayed as the sender in the confirmation email
+          example: John Doe
+          type: string
+        confirmFromEmail:
+          description: Email address from which the confirmation email is sent
+          example: john.doe@example.com
+          format: email
+          type: string
+        confirmMailSubject:
+          description: Subject line of the confirmation email
+          example: Please Confirm Your Subscription
+          type: string
+        confirmMailMessage:
+          description: Plain text message body of the confirmation email
+          example: Click the link below to confirm your subscription.
+          type: string
+        confirmSuccessPage:
+          description: URL of the success page after confirmation
+          example: https://example.com/confirmation-success
+          type: string
+        created:
+          description: Date and time when the list was created
+          example: 2024-10-01T12:34:56Z
+          format: date-time
+          type: string
+        updated:
+          description: Date and time when the list was last updated
+          example: 2024-10-10T14:30:00Z
+          format: date-time
+          type: string
+        confirmSender:
+          description: Details of the sender of the confirmation email
+          nullable: true
+          type: string
+      type: object
+    DeleteRequest:
+      properties:
+        deleteContacts:
+          description: Indicates whether to delete associated contacts.
+          example: true
+          type: boolean
+      type: object
+    DeleteResponse:
+      example:
+        id: sendx123
+        message: Resource (name) has been deleted successfully.
+      properties:
+        id:
+          example: sendx123
+          type: string
+        message:
+          example: Resource (name) has been deleted successfully.
+          type: string
+      type: object
+    CreateResponse:
+      example:
+        success: true
+        name: My New Resource
+        id: sendx123
+      properties:
+        id:
+          example: sendx123
+          type: string
+        name:
+          example: My New Resource
+          type: string
+        success:
+          example: true
+          type: boolean
+      type: object
+    DashboardStats:
+      properties:
+        lastEmailCampaignStat:
+          $ref: '#/components/schemas/LastSentCampaignStat'
+        newsletterCount:
+          description: Number of newsletters sent.
+          example: 10
+          type: integer
+        automationCount:
+          description: Number of automations set up.
+          example: 5
+          type: integer
+      type: object
+    LastSentCampaignStat:
+      properties:
+        campaign:
+          $ref: '#/components/schemas/CampaignDashboardData'
+        sent:
+          description: Number of emails sent.
+          example: 100
+          type: integer
+        delivered:
+          description: Number of emails delivered.
+          example: 90
+          type: integer
+        subscribed:
+          description: Number of new subscriptions.
+          example: 10
+          type: integer
+        unsubscribed:
+          description: Number of unsubscribes.
+          example: 5
+          type: integer
+        open:
+          description: Number of emails opened.
+          example: 50
+          type: integer
+        linkClicked:
+          description: Number of link clicks.
+          example: 20
+          type: integer
+        replied:
+          description: Number of replies received.
+          example: 3
+          type: integer
+      type: object
+    Tag:
+      example:
+        created: 2024-10-08T12:00:00Z
+        name: Important Tag
+        id: sendx_123
+        updated: 2024-10-08T12:00:00Z
+      properties:
+        id:
+          example: sendx_123
+          type: string
+        name:
+          example: Important Tag
+          type: string
+        created:
+          example: 2024-10-08T12:00:00Z
+          format: date-time
+          type: string
+        updated:
+          example: 2024-10-08T12:00:00Z
+          format: date-time
+          type: string
+      type: object
+    CampaignDashboardData:
+      properties:
+        id:
+          description: Unique identifier for the campaign.
+          example: 1
+          type: integer
+        name:
+          description: Name of the campaign.
+          example: Weekly Newsletter
+          type: string
+        subject:
+          description: Subject of the campaign.
+          example: This Week's Highlights
+          type: string
+        sentTime:
+          description: The time the campaign was sent.
+          example: 2024-09-30T14:00:00Z
+          format: date-time
+          type: string
+        campaignScreenshotUrl:
+          description: URL to a screenshot of the campaign.
+          example: http://example.com/screenshot.png
+          type: string
+      type: object
+    TagRequest:
+      example:
+        name: Marketing Tag
+      properties:
+        name:
+          example: Marketing Tag
+          type: string
+      type: object
+    ReportData:
+      description: Contains the report data for a given campaign
+      example:
+        emailRevenue: $5000
+        linkStats:
+          www.example.com: 123
+        clickedContactCount: 230
+        bounceContactCount: 5
+        campaignId: sendx123
+        openedContactCount: 345
+        repliedContactCount: 12
+        clickedUniqueContactCount: 210
+        sentContactCount: 500
+        repliedUniqueContactCount: 11
+        openedUniqueContactCount: 320
+        unsubscribeContactCount: 10
+        spamContactCount: 2
+        currency: USD
+        revenuePerRecipient: $10
+      properties:
+        campaignId:
+          description: The ID of the campaign
+          example: sendx123
+          type: string
+        linkStats:
+          additionalProperties:
+            type: integer
+          description: Statistics about the links clicked within the campaign
+          example:
+            www.example.com: 123
+          type: object
+        clickedContactCount:
+          description: The total number of contacts that clicked on any link
+          example: 230
+          type: integer
+        openedContactCount:
+          description: The total number of contacts that opened the campaign email
+          example: 345
+          type: integer
+        repliedContactCount:
+          description: The total number of contacts that replied to the campaign email
+          example: 12
+          type: integer
+        clickedUniqueContactCount:
+          description: The unique number of contacts that clicked on any link
+          example: 210
+          type: integer
+        openedUniqueContactCount:
+          description: The unique number of contacts that opened the campaign email
+          example: 320
+          type: integer
+        repliedUniqueContactCount:
+          description: The unique number of contacts that replied to the campaign
+            email
+          example: 11
+          type: integer
+        sentContactCount:
+          description: The total number of contacts the campaign was sent to
+          example: 500
+          type: integer
+        unsubscribeContactCount:
+          description: The total number of contacts that unsubscribed
+          example: 10
+          type: integer
+        bounceContactCount:
+          description: The total number of bounced contacts
+          example: 5
+          type: integer
+        spamContactCount:
+          description: The total number of contacts that marked the email as spam
+          example: 2
+          type: integer
+        emailRevenue:
+          description: The total revenue generated from the campaign email
+          example: $5000
+          type: string
+        revenuePerRecipient:
+          description: The average revenue generated per recipient
+          example: $10
+          type: string
+        currency:
+          description: The currency in which the revenue is measured
+          example: USD
+          type: string
+      type: object
+    Campaign:
+      example:
+        timezone: America/New_York
+        isArchived: false
+        excludedTags:
+        - Tag 3
+        - Tag 4
+        preferredTimeCondition: Send during work hours
+        campaignScreenshotUrl: https://example.com/screenshot.png
+        scheduleCondition: Send at a specific time
+        sendInContactsTimezone: true
+        includedLists:
+        - List 1
+        - List 2
+        includedSegments:
+        - VIP Customers
+        - New Subscribers
+        excludedLists:
+        - List 3
+        - List 4
+        preferredTimezone: America/Los_Angeles
+        scheduleType: 0
+        sender: marketing@company.com
+        includedTags:
+        - Tag 1
+        - Tag 2
+        name: New Year Promotion
+        trackReply: false
+        id: campaign123xyz
+        strategy: Batch sending
+        smartSend: false
+        excludedSegments:
+        - Unsubscribed Users
+        - Bounced Emails
+        status: 1
+        timeCondition: Send at 9:00 AM
+      properties:
+        id:
+          description: Encrypted ID of the campaign
+          example: campaign123xyz
+          type: string
+        name:
+          description: Name of the campaign
+          example: New Year Promotion
+          type: string
+        trackReply:
+          description: Indicates if replies to the campaign should be tracked
+          example: false
+          type: boolean
+        status:
+          description: "Campaign status: 0 (Draft), 1 (Scheduled), 2 (Sending), 3\
+            \ (Sent), 4 (Quarantined)"
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          example: 1
+          type: integer
+        scheduleType:
+          description: "Schedule type: 0 (Schedule later), 1 (Send Now), 2 (Trigger\
+            \ via automation), 3 (Recurring)"
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          example: 0
+          type: integer
+        scheduleCondition:
+          description: Condition for scheduling the campaign
+          example: Send at a specific time
+          type: string
+        timeCondition:
+          description: Time-related condition for the campaign
+          example: Send at 9:00 AM
+          type: string
+        timezone:
+          description: Timezone for the scheduled send
+          example: America/New_York
+          type: string
+        preferredTimeCondition:
+          description: Preferred time condition for the campaign
+          example: Send during work hours
+          type: string
+        preferredTimezone:
+          description: Preferred timezone for sending the campaign
+          example: America/Los_Angeles
+          type: string
+        strategy:
+          description: Strategy for the campaign
+          example: Batch sending
+          type: string
+        sendInContactsTimezone:
+          description: Indicates if the campaign should be sent in the recipient's
+            timezone
+          example: true
+          type: boolean
+        smartSend:
+          description: Indicates if smart sending should be used
+          example: false
+          type: boolean
+        isArchived:
+          description: Indicates if the campaign is archived
+          example: false
+          type: boolean
+        sender:
+          description: Information about the sender of the campaign
+          example: marketing@company.com
+          type: string
+        campaignScreenshotUrl:
+          description: URL of the campaign's screenshot
+          example: https://example.com/screenshot.png
+          type: string
+        includedSegments:
+          description: Segments to be included in the campaign
+          example:
+          - VIP Customers
+          - New Subscribers
+          items:
+            type: string
+          type: array
+        includedLists:
+          description: Lists to be included in the campaign
+          example:
+          - List 1
+          - List 2
+          items:
+            type: string
+          type: array
+        includedTags:
+          description: Tags to be included in the campaign
+          example:
+          - Tag 1
+          - Tag 2
+          items:
+            type: string
+          type: array
+        excludedSegments:
+          description: Segments to be excluded from the campaign
+          example:
+          - Unsubscribed Users
+          - Bounced Emails
+          items:
+            type: string
+          type: array
+        excludedLists:
+          description: Lists to be excluded from the campaign
+          example:
+          - List 3
+          - List 4
+          items:
+            type: string
+          type: array
+        excludedTags:
+          description: Tags to be excluded from the campaign
+          example:
+          - Tag 3
+          - Tag 4
+          items:
+            type: string
+          type: array
+      type: object
+    ListRequest:
+      example:
+        thankYouSender: sender_101
+        confirmMailMessage: Click the link below to confirm your subscription.
+        thankYouMailSubject: Thank You for Subscribing!
+        confirmFromEmail: john.doe@example.com
+        confirmMailSubject: Please Confirm Your Subscription
+        thankYouFromEmail: john.doe@example.com
+        confirmSender: sender_102
+        type: 0
+        thankYouFromName: John Doe
+        confirmFromName: John Doe
+        name: Newsletter Subscribers
+        sendThankYouMail: true
+        confirmSuccessPage: https://example.com/confirmation-success
+        thankYouMailMessage: We appreciate your subscription!
+      properties:
+        name:
+          description: Name of the list
+          example: Newsletter Subscribers
+          type: string
+        type:
+          description: |
+            Type of the list representing opt-in methods <br> 0: Single opt-in list <br> 1: Double opt-in list
+          enum:
+          - 0
+          - 1
+          example: 0
+          type: integer
+        sendThankYouMail:
+          description: Indicates if a thank-you email should be sent
+          example: true
+          type: boolean
+        thankYouFromName:
+          description: Name displayed as the sender in the thank-you email
+          example: John Doe
+          type: string
+        thankYouFromEmail:
+          description: Email address from which the thank-you email is sent
+          example: john.doe@example.com
+          format: email
+          type: string
+        thankYouMailSubject:
+          description: Subject line of the thank-you email
+          example: Thank You for Subscribing!
+          type: string
+        thankYouMailMessage:
+          description: Plain text message body of the thank-you email
+          example: We appreciate your subscription!
+          type: string
+        thankYouSender:
+          description: Sender ID for the thank-you email
+          example: sender_101
+          type: string
+        confirmFromName:
+          description: Name displayed as the sender in the confirmation email
+          example: John Doe
+          type: string
+        confirmFromEmail:
+          description: Email address from which the confirmation email is sent
+          example: john.doe@example.com
+          format: email
+          type: string
+        confirmMailSubject:
+          description: Subject line of the confirmation email
+          example: Please Confirm Your Subscription
+          type: string
+        confirmMailMessage:
+          description: Plain text message body of the confirmation email
+          example: Click the link below to confirm your subscription.
+          type: string
+        confirmSuccessPage:
+          description: URL of the success page after confirmation
+          example: https://example.com/confirmation-success
+          type: string
+        confirmSender:
+          description: Sender ID for the confirmation email
+          example: sender_102
+          type: string
+      type: object
+    SenderRequest:
+      example:
+        name: Linus
+        email: linus@linux.org
+      properties:
+        name:
+          description: Name of the sender
+          example: Linus
+          type: string
+        email:
+          description: Email address of the sender
+          example: linus@linux.org
+          format: email
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    Sender:
+      example:
+        name: Linus
+        id: sender_123
+        email: linus@linux.org
+      properties:
+        id:
+          description: ID of the sender
+          example: sender_123
+          type: string
+        name:
+          description: Name of the sender
+          example: Linus
+          type: string
+        email:
+          description: Email address of the sender
+          example: linus@linux.org
+          format: email
+          type: string
+      required:
+      - email
+      - id
+      - name
+      type: object
+    SenderResponse:
+      example:
+        name: name
+        id: id
+        isWhitelisted: true
+        email: email
+      properties:
+        id:
+          description: Encrypted ID of the sender
+          type: string
+        name:
+          description: Name of the sender
+          type: string
+        email:
+          description: Email address of the sender
+          format: email
+          type: string
+        isWhitelisted:
+          description: Indicates if the sender is whitelisted
+          type: boolean
+      required:
+      - email
+      - id
+      - isWhitelisted
+      - name
+      type: object
+    deleteCampaign_200_response:
+      example:
+        id: 0
+        message: message
+      properties:
+        id:
+          description: ID of the deleted campaign
+          type: integer
+        message:
+          description: Success message
+          type: string
+      type: object
+  securitySchemes:
+    apiKeyAuth:
+      in: header
+      name: X-Team-ApiKey
+      type: apiKey
+
