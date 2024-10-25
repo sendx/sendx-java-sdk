@@ -25,6 +25,8 @@ jobs:
           echo "use-agent" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
           echo RELOADAGENT | gpg-connect-agent
+          export GPG_TTY=$(tty)
+          echo 'pinentry-mode loopback' >> ~/.gnupg/gpg.conf
 
       # Set up Maven Central credentials
       - name: Set up Maven settings
