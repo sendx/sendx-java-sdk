@@ -46,56 +46,79 @@ import java.util.Set;
 import sendx_java_sdk.JSON;
 
 /**
- * SenderRequest
+ * ObjectResponse
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-25T16:47:38.261598+05:30[Asia/Kolkata]", comments = "Generator version: 7.8.0")
-public class SenderRequest {
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+public class ObjectResponse {
+  public static final String SERIALIZED_NAME_STATUS = "status";
+  @SerializedName(SERIALIZED_NAME_STATUS)
+  private String status;
 
-  public static final String SERIALIZED_NAME_EMAIL = "email";
-  @SerializedName(SERIALIZED_NAME_EMAIL)
-  private String email;
+  public static final String SERIALIZED_NAME_MESSAGE = "message";
+  @SerializedName(SERIALIZED_NAME_MESSAGE)
+  private String message;
 
-  public SenderRequest() {
+  public static final String SERIALIZED_NAME_DATA = "data";
+  @SerializedName(SERIALIZED_NAME_DATA)
+  private String data;
+
+  public ObjectResponse() {
   }
 
-  public SenderRequest name(String name) {
-    this.name = name;
+  public ObjectResponse status(String status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * Name of the sender
-   * @return name
+   * The status of the response.
+   * @return status
    */
-  @javax.annotation.Nonnull
-  public String getName() {
-    return name;
+  @javax.annotation.Nullable
+  public String getStatus() {
+    return status;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 
-  public SenderRequest email(String email) {
-    this.email = email;
+  public ObjectResponse message(String message) {
+    this.message = message;
     return this;
   }
 
   /**
-   * Email address of the sender
-   * @return email
+   * A message indicating the result of the operation.
+   * @return message
    */
-  @javax.annotation.Nonnull
-  public String getEmail() {
-    return email;
+  @javax.annotation.Nullable
+  public String getMessage() {
+    return message;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+
+  public ObjectResponse data(String data) {
+    this.data = data;
+    return this;
+  }
+
+  /**
+   * Additional data associated with the response.
+   * @return data
+   */
+  @javax.annotation.Nullable
+  public String getData() {
+    return data;
+  }
+
+  public void setData(String data) {
+    this.data = data;
   }
 
 
@@ -108,22 +131,24 @@ public class SenderRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SenderRequest senderRequest = (SenderRequest) o;
-    return Objects.equals(this.name, senderRequest.name) &&
-        Objects.equals(this.email, senderRequest.email);
+    ObjectResponse objectResponse = (ObjectResponse) o;
+    return Objects.equals(this.status, objectResponse.status) &&
+        Objects.equals(this.message, objectResponse.message) &&
+        Objects.equals(this.data, objectResponse.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, email);
+    return Objects.hash(status, message, data);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SenderRequest {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("class ObjectResponse {\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -146,48 +171,43 @@ public class SenderRequest {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("name");
-    openapiFields.add("email");
+    openapiFields.add("status");
+    openapiFields.add("message");
+    openapiFields.add("data");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("name");
-    openapiRequiredFields.add("email");
   }
 
   /**
    * Validates the JSON Element and throws an exception if issues found
    *
    * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to SenderRequest
+   * @throws IOException if the JSON Element is invalid with respect to ObjectResponse
    */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!SenderRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in SenderRequest is not found in the empty JSON string", SenderRequest.openapiRequiredFields.toString()));
+        if (!ObjectResponse.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ObjectResponse is not found in the empty JSON string", ObjectResponse.openapiRequiredFields.toString()));
         }
       }
 
       Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
       for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!SenderRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `SenderRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : SenderRequest.openapiRequiredFields) {
-        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        if (!ObjectResponse.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ObjectResponse` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if (!jsonObj.get("name").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
+      if ((jsonObj.get("status") != null && !jsonObj.get("status").isJsonNull()) && !jsonObj.get("status").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
       }
-      if (!jsonObj.get("email").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `email` to be a primitive type in the JSON string but got `%s`", jsonObj.get("email").toString()));
+      if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));
+      }
+      if ((jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) && !jsonObj.get("data").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `data` to be a primitive type in the JSON string but got `%s`", jsonObj.get("data").toString()));
       }
   }
 
@@ -195,22 +215,22 @@ public class SenderRequest {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!SenderRequest.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'SenderRequest' and its subtypes
+       if (!ObjectResponse.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ObjectResponse' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<SenderRequest> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(SenderRequest.class));
+       final TypeAdapter<ObjectResponse> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ObjectResponse.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<SenderRequest>() {
+       return (TypeAdapter<T>) new TypeAdapter<ObjectResponse>() {
            @Override
-           public void write(JsonWriter out, SenderRequest value) throws IOException {
+           public void write(JsonWriter out, ObjectResponse value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public SenderRequest read(JsonReader in) throws IOException {
+           public ObjectResponse read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -221,18 +241,18 @@ public class SenderRequest {
   }
 
   /**
-   * Create an instance of SenderRequest given an JSON string
+   * Create an instance of ObjectResponse given an JSON string
    *
    * @param jsonString JSON string
-   * @return An instance of SenderRequest
-   * @throws IOException if the JSON string is invalid with respect to SenderRequest
+   * @return An instance of ObjectResponse
+   * @throws IOException if the JSON string is invalid with respect to ObjectResponse
    */
-  public static SenderRequest fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, SenderRequest.class);
+  public static ObjectResponse fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ObjectResponse.class);
   }
 
   /**
-   * Convert an instance of SenderRequest to an JSON string
+   * Convert an instance of ObjectResponse to an JSON string
    *
    * @return JSON string
    */

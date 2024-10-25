@@ -24,17 +24,17 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
- * Model tests for OperationResponse
+ * Model tests for ObjectResponse
  */
-public class OperationResponseTest {
-    private final OperationResponse model = new OperationResponse();
+public class ObjectResponseTest {
+    private final ObjectResponse model = new ObjectResponse();
 
     /**
-     * Model tests for OperationResponse
+     * Model tests for ObjectResponse
      */
     @Test
-    public void testOperationResponse() {
-        // TODO: test OperationResponse
+    public void testObjectResponse() {
+        // TODO: test ObjectResponse
     }
 
     /**

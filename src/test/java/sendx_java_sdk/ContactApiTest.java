@@ -16,7 +16,7 @@ package sendx_java_sdk;
 import sendx_java_sdk.ApiException;
 import sendx_java_sdk.Contact;
 import sendx_java_sdk.ContactRequest;
-import sendx_java_sdk.OperationResponse;
+import sendx_java_sdk.ObjectResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +43,7 @@ public class ContactApiTest {
     @Test
     public void createContactTest() throws ApiException {
         ContactRequest contactRequest = null;
-        OperationResponse response = api.createContact(contactRequest);
+        ObjectResponse response = api.createContact(contactRequest);
         // TODO: test validations
     }
 
@@ -56,8 +56,8 @@ public class ContactApiTest {
      */
     @Test
     public void deleteContactTest() throws ApiException {
-        String contactId = null;
-        OperationResponse response = api.deleteContact(contactId);
+        String identifier = null;
+        ObjectResponse response = api.deleteContact(identifier);
         // TODO: test validations
     }
 
@@ -79,16 +79,16 @@ public class ContactApiTest {
     }
 
     /**
-     * Get Contact by ID
+     * Get Contact by Identifier
      *
-     * Retrieve a specific contact by its contactId.
+     * Retrieve a specific contact by its identifier.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getContactByIdTest() throws ApiException {
-        String contactId = null;
-        Contact response = api.getContactById(contactId);
+        String identifier = null;
+        Contact response = api.getContactById(identifier);
         // TODO: test validations
     }
 
@@ -101,8 +101,8 @@ public class ContactApiTest {
      */
     @Test
     public void unsubscribeContactTest() throws ApiException {
-        String contactId = null;
-        OperationResponse response = api.unsubscribeContact(contactId);
+        String identifier = null;
+        ObjectResponse response = api.unsubscribeContact(identifier);
         // TODO: test validations
     }
 
@@ -115,9 +115,9 @@ public class ContactApiTest {
      */
     @Test
     public void updateContactTest() throws ApiException {
-        String contactId = null;
+        String identifier = null;
         ContactRequest contactRequest = null;
-        Contact response = api.updateContact(contactId, contactRequest);
+        Contact response = api.updateContact(identifier, contactRequest);
         // TODO: test validations
     }
 

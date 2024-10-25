@@ -13,9 +13,9 @@
 
 package sendx_java_sdk;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-24T14:08:56.611307+05:30[Asia/Kolkata]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-25T16:47:38.261598+05:30[Asia/Kolkata]", comments = "Generator version: 7.8.0")
 public class Configuration {
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
 
     private static ApiClient defaultApiClient = new ApiClient();
 

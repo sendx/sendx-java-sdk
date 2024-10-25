@@ -103,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OperationResponse'
+                $ref: '#/components/schemas/ObjectResponse'
           description: Contact Created Successfully
         "401":
           description: Not Authorized
@@ -119,15 +119,15 @@ paths:
       x-content-type: application/json
       x-accepts:
       - application/json
-  /contact/{contactId}:
+  /contact/{identifier}:
     delete:
       description: Deletes Contact
       operationId: deleteContact
       parameters:
-      - description: The Contact ID to delete
+      - description: The Contact ID/ Email to delete
         explode: false
         in: path
-        name: contactId
+        name: identifier
         required: true
         schema:
           type: string
@@ -137,7 +137,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OperationResponse'
+                $ref: '#/components/schemas/ObjectResponse'
           description: Contact deleted successfully
         "401":
           description: Not Authorized
@@ -153,16 +153,16 @@ paths:
       x-accepts:
       - application/json
     get:
-      description: Retrieve a specific contact by its contactId.
+      description: Retrieve a specific contact by its identifier.
       operationId: getContactById
       parameters:
-      - description: The ID of the contact to retrieve.
+      - description: The ID or Email of the contact to retrieve.
         explode: false
         in: path
-        name: contactId
+        name: identifier
         required: true
         schema:
-          example: sendxid123
+          example: john@doe.com
           type: string
         style: simple
       responses:
@@ -180,7 +180,7 @@ paths:
           description: Request body is not in proper format.
         "500":
           description: Internal Server Error - Something went wrong on the server.
-      summary: Get Contact by ID
+      summary: Get Contact by Identifier
       tags:
       - Contact
       x-accepts:
@@ -189,10 +189,10 @@ paths:
       description: Update Contact with given data
       operationId: updateContact
       parameters:
-      - description: The ID of the Contact to update
+      - description: The ID or email of the Contact to update
         explode: false
         in: path
-        name: contactId
+        name: identifier
         required: true
         schema:
           example: sendxid123
@@ -225,15 +225,15 @@ paths:
       x-content-type: application/json
       x-accepts:
       - application/json
-  /contact/unsubscribe/{contactId}:
+  /contact/unsubscribe/{identifier}:
     post:
       description: Unsubscribe a globally existing contact
       operationId: unsubscribeContact
       parameters:
-      - description: The Contact ID to unsubscribe
+      - description: The Contact ID or email to unsubscribe
         explode: false
         in: path
-        name: contactId
+        name: identifier
         required: true
         schema:
           example: sendx123
@@ -244,7 +244,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OperationResponse'
+                $ref: '#/components/schemas/ObjectResponse'
           description: Contact successfully unsubscribed
         "401":
           description: Not Authorized
@@ -626,7 +626,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OperationResponse'
+                $ref: '#/components/schemas/ObjectResponse'
           description: List Updated Successfully
         "401":
           description: Not Authorized
@@ -837,7 +837,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OperationResponse'
+                $ref: '#/components/schemas/ObjectResponse'
           description: Tag updated successfully
         "401":
           description: Not Authorized
@@ -1186,7 +1186,7 @@ components:
             type: string
           type: array
       type: object
-    OperationResponse:
+    ObjectResponse:
       example:
         data: data
         message: message

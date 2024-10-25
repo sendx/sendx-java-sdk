@@ -16,7 +16,7 @@ package sendx_java_sdk;
 import sendx_java_sdk.ApiException;
 import sendx_java_sdk.CreateResponse;
 import sendx_java_sdk.DeleteResponse;
-import sendx_java_sdk.OperationResponse;
+import sendx_java_sdk.ObjectResponse;
 import sendx_java_sdk.Tag;
 import sendx_java_sdk.TagRequest;
 import org.junit.jupiter.api.Disabled;
@@ -104,7 +104,7 @@ public class TagsApiTest {
     public void updateTagTest() throws ApiException {
         String tagId = null;
         TagRequest tagRequest = null;
-        OperationResponse response = api.updateTag(tagId, tagRequest);
+        ObjectResponse response = api.updateTag(tagId, tagRequest);
         // TODO: test validations
     }
 

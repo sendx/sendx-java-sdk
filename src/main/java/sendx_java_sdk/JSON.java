@@ -106,7 +106,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.LastSentCampaignStat.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ListModel.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ListRequest.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.OperationResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ObjectResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ReportData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.Sender.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.SenderRequest.CustomTypeAdapterFactory());

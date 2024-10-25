@@ -18,7 +18,7 @@ import sendx_java_sdk.CreateResponse;
 import sendx_java_sdk.DeleteResponse;
 import sendx_java_sdk.ListModel;
 import sendx_java_sdk.ListRequest;
-import sendx_java_sdk.OperationResponse;
+import sendx_java_sdk.ObjectResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -104,7 +104,7 @@ public class ListApiTest {
     public void updateListTest() throws ApiException {
         String listId = null;
         ListRequest listRequest = null;
-        OperationResponse response = api.updateList(listId, listRequest);
+        ObjectResponse response = api.updateList(listId, listRequest);
         // TODO: test validations
     }
 

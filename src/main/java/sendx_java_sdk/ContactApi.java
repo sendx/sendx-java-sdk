@@ -29,7 +29,7 @@ import java.io.IOException;
 
 import sendx_java_sdk.Contact;
 import sendx_java_sdk.ContactRequest;
-import sendx_java_sdk.OperationResponse;
+import sendx_java_sdk.ObjectResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -150,7 +150,7 @@ public class ContactApi {
      * Create a contact
      * Create Contact with given data
      * @param contactRequest  (required)
-     * @return OperationResponse
+     * @return ObjectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -162,8 +162,8 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public OperationResponse createContact(ContactRequest contactRequest) throws ApiException {
-        ApiResponse<OperationResponse> localVarResp = createContactWithHttpInfo(contactRequest);
+    public ObjectResponse createContact(ContactRequest contactRequest) throws ApiException {
+        ApiResponse<ObjectResponse> localVarResp = createContactWithHttpInfo(contactRequest);
         return localVarResp.getData();
     }
 
@@ -171,7 +171,7 @@ public class ContactApi {
      * Create a contact
      * Create Contact with given data
      * @param contactRequest  (required)
-     * @return ApiResponse&lt;OperationResponse&gt;
+     * @return ApiResponse&lt;ObjectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -183,9 +183,9 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OperationResponse> createContactWithHttpInfo(ContactRequest contactRequest) throws ApiException {
+    public ApiResponse<ObjectResponse> createContactWithHttpInfo(ContactRequest contactRequest) throws ApiException {
         okhttp3.Call localVarCall = createContactValidateBeforeCall(contactRequest, null);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -206,16 +206,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createContactAsync(ContactRequest contactRequest, final ApiCallback<OperationResponse> _callback) throws ApiException {
+    public okhttp3.Call createContactAsync(ContactRequest contactRequest, final ApiCallback<ObjectResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createContactValidateBeforeCall(contactRequest, _callback);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for deleteContact
-     * @param contactId The Contact ID to delete (required)
+     * @param identifier The Contact ID/ Email to delete (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -229,7 +229,7 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteContactCall(String contactId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deleteContactCall(String identifier, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -246,8 +246,8 @@ public class ContactApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/contact/{contactId}"
-            .replace("{" + "contactId" + "}", localVarApiClient.escapeString(contactId.toString()));
+        String localVarPath = "/contact/{identifier}"
+            .replace("{" + "identifier" + "}", localVarApiClient.escapeString(identifier.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -275,21 +275,21 @@ public class ContactApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteContactValidateBeforeCall(String contactId, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'contactId' is set
-        if (contactId == null) {
-            throw new ApiException("Missing the required parameter 'contactId' when calling deleteContact(Async)");
+    private okhttp3.Call deleteContactValidateBeforeCall(String identifier, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'identifier' is set
+        if (identifier == null) {
+            throw new ApiException("Missing the required parameter 'identifier' when calling deleteContact(Async)");
         }
 
-        return deleteContactCall(contactId, _callback);
+        return deleteContactCall(identifier, _callback);
 
     }
 
     /**
      * Delete Contact
      * Deletes Contact
-     * @param contactId The Contact ID to delete (required)
-     * @return OperationResponse
+     * @param identifier The Contact ID/ Email to delete (required)
+     * @return ObjectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -301,16 +301,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public OperationResponse deleteContact(String contactId) throws ApiException {
-        ApiResponse<OperationResponse> localVarResp = deleteContactWithHttpInfo(contactId);
+    public ObjectResponse deleteContact(String identifier) throws ApiException {
+        ApiResponse<ObjectResponse> localVarResp = deleteContactWithHttpInfo(identifier);
         return localVarResp.getData();
     }
 
     /**
      * Delete Contact
      * Deletes Contact
-     * @param contactId The Contact ID to delete (required)
-     * @return ApiResponse&lt;OperationResponse&gt;
+     * @param identifier The Contact ID/ Email to delete (required)
+     * @return ApiResponse&lt;ObjectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -322,16 +322,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OperationResponse> deleteContactWithHttpInfo(String contactId) throws ApiException {
-        okhttp3.Call localVarCall = deleteContactValidateBeforeCall(contactId, null);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+    public ApiResponse<ObjectResponse> deleteContactWithHttpInfo(String identifier) throws ApiException {
+        okhttp3.Call localVarCall = deleteContactValidateBeforeCall(identifier, null);
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Delete Contact (asynchronously)
      * Deletes Contact
-     * @param contactId The Contact ID to delete (required)
+     * @param identifier The Contact ID/ Email to delete (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -345,10 +345,10 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteContactAsync(String contactId, final ApiCallback<OperationResponse> _callback) throws ApiException {
+    public okhttp3.Call deleteContactAsync(String identifier, final ApiCallback<ObjectResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteContactValidateBeforeCall(contactId, _callback);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+        okhttp3.Call localVarCall = deleteContactValidateBeforeCall(identifier, _callback);
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -511,7 +511,7 @@ public class ContactApi {
     }
     /**
      * Build call for getContactById
-     * @param contactId The ID of the contact to retrieve. (required)
+     * @param identifier The ID or Email of the contact to retrieve. (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -525,7 +525,7 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error - Something went wrong on the server. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getContactByIdCall(String contactId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getContactByIdCall(String identifier, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -542,8 +542,8 @@ public class ContactApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/contact/{contactId}"
-            .replace("{" + "contactId" + "}", localVarApiClient.escapeString(contactId.toString()));
+        String localVarPath = "/contact/{identifier}"
+            .replace("{" + "identifier" + "}", localVarApiClient.escapeString(identifier.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -571,20 +571,20 @@ public class ContactApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getContactByIdValidateBeforeCall(String contactId, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'contactId' is set
-        if (contactId == null) {
-            throw new ApiException("Missing the required parameter 'contactId' when calling getContactById(Async)");
+    private okhttp3.Call getContactByIdValidateBeforeCall(String identifier, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'identifier' is set
+        if (identifier == null) {
+            throw new ApiException("Missing the required parameter 'identifier' when calling getContactById(Async)");
         }
 
-        return getContactByIdCall(contactId, _callback);
+        return getContactByIdCall(identifier, _callback);
 
     }
 
     /**
-     * Get Contact by ID
-     * Retrieve a specific contact by its contactId.
-     * @param contactId The ID of the contact to retrieve. (required)
+     * Get Contact by Identifier
+     * Retrieve a specific contact by its identifier.
+     * @param identifier The ID or Email of the contact to retrieve. (required)
      * @return Contact
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -597,15 +597,15 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error - Something went wrong on the server. </td><td>  -  </td></tr>
      </table>
      */
-    public Contact getContactById(String contactId) throws ApiException {
-        ApiResponse<Contact> localVarResp = getContactByIdWithHttpInfo(contactId);
+    public Contact getContactById(String identifier) throws ApiException {
+        ApiResponse<Contact> localVarResp = getContactByIdWithHttpInfo(identifier);
         return localVarResp.getData();
     }
 
     /**
-     * Get Contact by ID
-     * Retrieve a specific contact by its contactId.
-     * @param contactId The ID of the contact to retrieve. (required)
+     * Get Contact by Identifier
+     * Retrieve a specific contact by its identifier.
+     * @param identifier The ID or Email of the contact to retrieve. (required)
      * @return ApiResponse&lt;Contact&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -618,16 +618,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error - Something went wrong on the server. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Contact> getContactByIdWithHttpInfo(String contactId) throws ApiException {
-        okhttp3.Call localVarCall = getContactByIdValidateBeforeCall(contactId, null);
+    public ApiResponse<Contact> getContactByIdWithHttpInfo(String identifier) throws ApiException {
+        okhttp3.Call localVarCall = getContactByIdValidateBeforeCall(identifier, null);
         Type localVarReturnType = new TypeToken<Contact>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get Contact by ID (asynchronously)
-     * Retrieve a specific contact by its contactId.
-     * @param contactId The ID of the contact to retrieve. (required)
+     * Get Contact by Identifier (asynchronously)
+     * Retrieve a specific contact by its identifier.
+     * @param identifier The ID or Email of the contact to retrieve. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -641,16 +641,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error - Something went wrong on the server. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getContactByIdAsync(String contactId, final ApiCallback<Contact> _callback) throws ApiException {
+    public okhttp3.Call getContactByIdAsync(String identifier, final ApiCallback<Contact> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getContactByIdValidateBeforeCall(contactId, _callback);
+        okhttp3.Call localVarCall = getContactByIdValidateBeforeCall(identifier, _callback);
         Type localVarReturnType = new TypeToken<Contact>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for unsubscribeContact
-     * @param contactId The Contact ID to unsubscribe (required)
+     * @param identifier The Contact ID or email to unsubscribe (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -664,7 +664,7 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call unsubscribeContactCall(String contactId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call unsubscribeContactCall(String identifier, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -681,8 +681,8 @@ public class ContactApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/contact/unsubscribe/{contactId}"
-            .replace("{" + "contactId" + "}", localVarApiClient.escapeString(contactId.toString()));
+        String localVarPath = "/contact/unsubscribe/{identifier}"
+            .replace("{" + "identifier" + "}", localVarApiClient.escapeString(identifier.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -710,21 +710,21 @@ public class ContactApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call unsubscribeContactValidateBeforeCall(String contactId, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'contactId' is set
-        if (contactId == null) {
-            throw new ApiException("Missing the required parameter 'contactId' when calling unsubscribeContact(Async)");
+    private okhttp3.Call unsubscribeContactValidateBeforeCall(String identifier, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'identifier' is set
+        if (identifier == null) {
+            throw new ApiException("Missing the required parameter 'identifier' when calling unsubscribeContact(Async)");
         }
 
-        return unsubscribeContactCall(contactId, _callback);
+        return unsubscribeContactCall(identifier, _callback);
 
     }
 
     /**
      * Unsubscribe Contact
      * Unsubscribe a globally existing contact
-     * @param contactId The Contact ID to unsubscribe (required)
-     * @return OperationResponse
+     * @param identifier The Contact ID or email to unsubscribe (required)
+     * @return ObjectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -736,16 +736,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public OperationResponse unsubscribeContact(String contactId) throws ApiException {
-        ApiResponse<OperationResponse> localVarResp = unsubscribeContactWithHttpInfo(contactId);
+    public ObjectResponse unsubscribeContact(String identifier) throws ApiException {
+        ApiResponse<ObjectResponse> localVarResp = unsubscribeContactWithHttpInfo(identifier);
         return localVarResp.getData();
     }
 
     /**
      * Unsubscribe Contact
      * Unsubscribe a globally existing contact
-     * @param contactId The Contact ID to unsubscribe (required)
-     * @return ApiResponse&lt;OperationResponse&gt;
+     * @param identifier The Contact ID or email to unsubscribe (required)
+     * @return ApiResponse&lt;ObjectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -757,16 +757,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OperationResponse> unsubscribeContactWithHttpInfo(String contactId) throws ApiException {
-        okhttp3.Call localVarCall = unsubscribeContactValidateBeforeCall(contactId, null);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+    public ApiResponse<ObjectResponse> unsubscribeContactWithHttpInfo(String identifier) throws ApiException {
+        okhttp3.Call localVarCall = unsubscribeContactValidateBeforeCall(identifier, null);
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Unsubscribe Contact (asynchronously)
      * Unsubscribe a globally existing contact
-     * @param contactId The Contact ID to unsubscribe (required)
+     * @param identifier The Contact ID or email to unsubscribe (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -780,16 +780,16 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call unsubscribeContactAsync(String contactId, final ApiCallback<OperationResponse> _callback) throws ApiException {
+    public okhttp3.Call unsubscribeContactAsync(String identifier, final ApiCallback<ObjectResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = unsubscribeContactValidateBeforeCall(contactId, _callback);
-        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
+        okhttp3.Call localVarCall = unsubscribeContactValidateBeforeCall(identifier, _callback);
+        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for updateContact
-     * @param contactId The ID of the Contact to update (required)
+     * @param identifier The ID or email of the Contact to update (required)
      * @param contactRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -804,7 +804,7 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateContactCall(String contactId, ContactRequest contactRequest, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateContactCall(String identifier, ContactRequest contactRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -821,8 +821,8 @@ public class ContactApi {
         Object localVarPostBody = contactRequest;
 
         // create path and map variables
-        String localVarPath = "/contact/{contactId}"
-            .replace("{" + "contactId" + "}", localVarApiClient.escapeString(contactId.toString()));
+        String localVarPath = "/contact/{identifier}"
+            .replace("{" + "identifier" + "}", localVarApiClient.escapeString(identifier.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -851,10 +851,10 @@ public class ContactApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateContactValidateBeforeCall(String contactId, ContactRequest contactRequest, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'contactId' is set
-        if (contactId == null) {
-            throw new ApiException("Missing the required parameter 'contactId' when calling updateContact(Async)");
+    private okhttp3.Call updateContactValidateBeforeCall(String identifier, ContactRequest contactRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'identifier' is set
+        if (identifier == null) {
+            throw new ApiException("Missing the required parameter 'identifier' when calling updateContact(Async)");
         }
 
         // verify the required parameter 'contactRequest' is set
@@ -862,14 +862,14 @@ public class ContactApi {
             throw new ApiException("Missing the required parameter 'contactRequest' when calling updateContact(Async)");
         }
 
-        return updateContactCall(contactId, contactRequest, _callback);
+        return updateContactCall(identifier, contactRequest, _callback);
 
     }
 
     /**
      * Update Contact
      * Update Contact with given data
-     * @param contactId The ID of the Contact to update (required)
+     * @param identifier The ID or email of the Contact to update (required)
      * @param contactRequest  (required)
      * @return Contact
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -883,15 +883,15 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public Contact updateContact(String contactId, ContactRequest contactRequest) throws ApiException {
-        ApiResponse<Contact> localVarResp = updateContactWithHttpInfo(contactId, contactRequest);
+    public Contact updateContact(String identifier, ContactRequest contactRequest) throws ApiException {
+        ApiResponse<Contact> localVarResp = updateContactWithHttpInfo(identifier, contactRequest);
         return localVarResp.getData();
     }
 
     /**
      * Update Contact
      * Update Contact with given data
-     * @param contactId The ID of the Contact to update (required)
+     * @param identifier The ID or email of the Contact to update (required)
      * @param contactRequest  (required)
      * @return ApiResponse&lt;Contact&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -905,8 +905,8 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Contact> updateContactWithHttpInfo(String contactId, ContactRequest contactRequest) throws ApiException {
-        okhttp3.Call localVarCall = updateContactValidateBeforeCall(contactId, contactRequest, null);
+    public ApiResponse<Contact> updateContactWithHttpInfo(String identifier, ContactRequest contactRequest) throws ApiException {
+        okhttp3.Call localVarCall = updateContactValidateBeforeCall(identifier, contactRequest, null);
         Type localVarReturnType = new TypeToken<Contact>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -914,7 +914,7 @@ public class ContactApi {
     /**
      * Update Contact (asynchronously)
      * Update Contact with given data
-     * @param contactId The ID of the Contact to update (required)
+     * @param identifier The ID or email of the Contact to update (required)
      * @param contactRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -929,9 +929,9 @@ public class ContactApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateContactAsync(String contactId, ContactRequest contactRequest, final ApiCallback<Contact> _callback) throws ApiException {
+    public okhttp3.Call updateContactAsync(String identifier, ContactRequest contactRequest, final ApiCallback<Contact> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateContactValidateBeforeCall(contactId, contactRequest, _callback);
+        okhttp3.Call localVarCall = updateContactValidateBeforeCall(identifier, contactRequest, _callback);
         Type localVarReturnType = new TypeToken<Contact>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
