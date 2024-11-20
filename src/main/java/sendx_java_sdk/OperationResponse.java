@@ -48,7 +48,7 @@ import sendx_java_sdk.JSON;
 /**
  * OperationResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-24T14:08:56.611307+05:30[Asia/Kolkata]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-20T15:47:50.139618+05:30[Asia/Kolkata]", comments = "Generator version: 7.8.0")
 public class OperationResponse {
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)

@@ -5,11 +5,11 @@ All URIs are relative to *https://api.sendx.io/api/v1/rest*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**createContact**](ContactApi.md#createContact) | **POST** /contact | Create a contact |
-| [**deleteContact**](ContactApi.md#deleteContact) | **DELETE** /contact/{contactId} | Delete Contact |
+| [**deleteContact**](ContactApi.md#deleteContact) | **DELETE** /contact/{identifier} | Delete Contact |
 | [**getAllContacts**](ContactApi.md#getAllContacts) | **GET** /contact | Get All Contacts |
-| [**getContactById**](ContactApi.md#getContactById) | **GET** /contact/{contactId} | Get Contact by ID |
-| [**unsubscribeContact**](ContactApi.md#unsubscribeContact) | **POST** /contact/unsubscribe/{contactId} | Unsubscribe Contact |
-| [**updateContact**](ContactApi.md#updateContact) | **PUT** /contact/{contactId} | Update Contact |
+| [**getContactById**](ContactApi.md#getContactById) | **GET** /contact/{identifier} | Get Contact by Identifier |
+| [**unsubscribeContact**](ContactApi.md#unsubscribeContact) | **POST** /contact/unsubscribe/{identifier} | Unsubscribe Contact |
+| [**updateContact**](ContactApi.md#updateContact) | **PUT** /contact/{identifier} | Update Contact |
 
 
 <a id="createContact"></a>
@@ -87,7 +87,7 @@ public class Example {
 
 <a id="deleteContact"></a>
 # **deleteContact**
-> OperationResponse deleteContact(contactId)
+> OperationResponse deleteContact(identifier)
 
 Delete Contact
 
@@ -115,9 +115,9 @@ public class Example {
     //apiKeyAuth.setApiKeyPrefix("Token");
 
     ContactApi apiInstance = new ContactApi(defaultClient);
-    String contactId = "contactId_example"; // String | The Contact ID to delete
+    String identifier = "identifier_example"; // String | The Contact ID/ Email to delete
     try {
-      OperationResponse result = apiInstance.deleteContact(contactId);
+      OperationResponse result = apiInstance.deleteContact(identifier);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ContactApi#deleteContact");
@@ -134,7 +134,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contactId** | **String**| The Contact ID to delete | |
+| **identifier** | **String**| The Contact ID/ Email to delete | |
 
 ### Return type
 
@@ -238,11 +238,11 @@ public class Example {
 
 <a id="getContactById"></a>
 # **getContactById**
-> Contact getContactById(contactId)
+> Contact getContactById(identifier)
 
-Get Contact by ID
+Get Contact by Identifier
 
-Retrieve a specific contact by its contactId.
+Retrieve a specific contact by its identifier.
 
 ### Example
 ```java
@@ -266,9 +266,9 @@ public class Example {
     //apiKeyAuth.setApiKeyPrefix("Token");
 
     ContactApi apiInstance = new ContactApi(defaultClient);
-    String contactId = "sendxid123"; // String | The ID of the contact to retrieve.
+    String identifier = "john@doe.com"; // String | The ID or Email of the contact to retrieve.
     try {
-      Contact result = apiInstance.getContactById(contactId);
+      Contact result = apiInstance.getContactById(identifier);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ContactApi#getContactById");
@@ -285,7 +285,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contactId** | **String**| The ID of the contact to retrieve. | |
+| **identifier** | **String**| The ID or Email of the contact to retrieve. | |
 
 ### Return type
 
@@ -311,7 +311,7 @@ public class Example {
 
 <a id="unsubscribeContact"></a>
 # **unsubscribeContact**
-> OperationResponse unsubscribeContact(contactId)
+> OperationResponse unsubscribeContact(identifier)
 
 Unsubscribe Contact
 
@@ -339,9 +339,9 @@ public class Example {
     //apiKeyAuth.setApiKeyPrefix("Token");
 
     ContactApi apiInstance = new ContactApi(defaultClient);
-    String contactId = "sendx123"; // String | The Contact ID to unsubscribe
+    String identifier = "sendx123"; // String | The Contact ID or email to unsubscribe
     try {
-      OperationResponse result = apiInstance.unsubscribeContact(contactId);
+      OperationResponse result = apiInstance.unsubscribeContact(identifier);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ContactApi#unsubscribeContact");
@@ -358,7 +358,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contactId** | **String**| The Contact ID to unsubscribe | |
+| **identifier** | **String**| The Contact ID or email to unsubscribe | |
 
 ### Return type
 
@@ -384,7 +384,7 @@ public class Example {
 
 <a id="updateContact"></a>
 # **updateContact**
-> Contact updateContact(contactId, contactRequest)
+> Contact updateContact(identifier, contactRequest)
 
 Update Contact
 
@@ -412,10 +412,10 @@ public class Example {
     //apiKeyAuth.setApiKeyPrefix("Token");
 
     ContactApi apiInstance = new ContactApi(defaultClient);
-    String contactId = "sendxid123"; // String | The ID of the Contact to update
+    String identifier = "sendxid123"; // String | The ID or email of the Contact to update
     ContactRequest contactRequest = new ContactRequest(); // ContactRequest | 
     try {
-      Contact result = apiInstance.updateContact(contactId, contactRequest);
+      Contact result = apiInstance.updateContact(identifier, contactRequest);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ContactApi#updateContact");
@@ -432,7 +432,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **contactId** | **String**| The ID of the Contact to update | |
+| **identifier** | **String**| The ID or email of the Contact to update | |
 | **contactRequest** | [**ContactRequest**](ContactRequest.md)|  | |
 
 ### Return type

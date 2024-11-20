@@ -99,20 +99,27 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.Contact.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ContactRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.CreateResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.CustomEventRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.DashboardStats.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.DeleteCampaign200Response.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.DeleteRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.DeleteResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.EventResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.IdentifyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.IdentifyResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.LastSentCampaignStat.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ListModel.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ListRequest.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ObjectResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.OperationResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.ReportData.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.RevenueEventRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.Sender.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.SenderRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.SenderResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.Tag.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.TagRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.TrackRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new sendx_java_sdk.TrackResponse.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }
 

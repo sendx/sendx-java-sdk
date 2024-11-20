@@ -31,7 +31,7 @@ import sendx_java_sdk.CreateResponse;
 import sendx_java_sdk.DeleteResponse;
 import sendx_java_sdk.ListModel;
 import sendx_java_sdk.ListRequest;
-import sendx_java_sdk.ObjectResponse;
+import sendx_java_sdk.OperationResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -731,7 +731,7 @@ public class ListApi {
      * Update an existing list by its ID.
      * @param listId The ID of the list to be updated. (required)
      * @param listRequest  (required)
-     * @return ObjectResponse
+     * @return OperationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -744,8 +744,8 @@ public class ListApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ObjectResponse updateList(String listId, ListRequest listRequest) throws ApiException {
-        ApiResponse<ObjectResponse> localVarResp = updateListWithHttpInfo(listId, listRequest);
+    public OperationResponse updateList(String listId, ListRequest listRequest) throws ApiException {
+        ApiResponse<OperationResponse> localVarResp = updateListWithHttpInfo(listId, listRequest);
         return localVarResp.getData();
     }
 
@@ -754,7 +754,7 @@ public class ListApi {
      * Update an existing list by its ID.
      * @param listId The ID of the list to be updated. (required)
      * @param listRequest  (required)
-     * @return ApiResponse&lt;ObjectResponse&gt;
+     * @return ApiResponse&lt;OperationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -767,9 +767,9 @@ public class ListApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ObjectResponse> updateListWithHttpInfo(String listId, ListRequest listRequest) throws ApiException {
+    public ApiResponse<OperationResponse> updateListWithHttpInfo(String listId, ListRequest listRequest) throws ApiException {
         okhttp3.Call localVarCall = updateListValidateBeforeCall(listId, listRequest, null);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -792,10 +792,10 @@ public class ListApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateListAsync(String listId, ListRequest listRequest, final ApiCallback<ObjectResponse> _callback) throws ApiException {
+    public okhttp3.Call updateListAsync(String listId, ListRequest listRequest, final ApiCallback<OperationResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateListValidateBeforeCall(listId, listRequest, _callback);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

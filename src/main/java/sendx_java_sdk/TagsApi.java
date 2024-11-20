@@ -29,7 +29,7 @@ import java.io.IOException;
 
 import sendx_java_sdk.CreateResponse;
 import sendx_java_sdk.DeleteResponse;
-import sendx_java_sdk.ObjectResponse;
+import sendx_java_sdk.OperationResponse;
 import sendx_java_sdk.Tag;
 import sendx_java_sdk.TagRequest;
 
@@ -732,7 +732,7 @@ public class TagsApi {
      * Update an existing tag
      * @param tagId ID of the tag to update (required)
      * @param tagRequest The tag content (required)
-     * @return ObjectResponse
+     * @return OperationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -745,8 +745,8 @@ public class TagsApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ObjectResponse updateTag(String tagId, TagRequest tagRequest) throws ApiException {
-        ApiResponse<ObjectResponse> localVarResp = updateTagWithHttpInfo(tagId, tagRequest);
+    public OperationResponse updateTag(String tagId, TagRequest tagRequest) throws ApiException {
+        ApiResponse<OperationResponse> localVarResp = updateTagWithHttpInfo(tagId, tagRequest);
         return localVarResp.getData();
     }
 
@@ -755,7 +755,7 @@ public class TagsApi {
      * Update an existing tag
      * @param tagId ID of the tag to update (required)
      * @param tagRequest The tag content (required)
-     * @return ApiResponse&lt;ObjectResponse&gt;
+     * @return ApiResponse&lt;OperationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -768,9 +768,9 @@ public class TagsApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ObjectResponse> updateTagWithHttpInfo(String tagId, TagRequest tagRequest) throws ApiException {
+    public ApiResponse<OperationResponse> updateTagWithHttpInfo(String tagId, TagRequest tagRequest) throws ApiException {
         okhttp3.Call localVarCall = updateTagValidateBeforeCall(tagId, tagRequest, null);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -793,10 +793,10 @@ public class TagsApi {
         <tr><td> 500 </td><td> Internal Server Error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateTagAsync(String tagId, TagRequest tagRequest, final ApiCallback<ObjectResponse> _callback) throws ApiException {
+    public okhttp3.Call updateTagAsync(String tagId, TagRequest tagRequest, final ApiCallback<OperationResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateTagValidateBeforeCall(tagId, tagRequest, _callback);
-        Type localVarReturnType = new TypeToken<ObjectResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<OperationResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

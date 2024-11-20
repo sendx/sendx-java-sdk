@@ -18,12 +18,82 @@ servers:
 security:
 - apiKeyAuth: []
 tags:
+- description: |
+    The **Identify API Method** and **Track API Method** are foundational APIs for managing contacts and tracking events within the system. These APIs enable seamless integration with your application, allowing you to attach data to visitors, update contact information, and track user behavior using tags.
+
+    ## Identify API Method
+    The Identify API Method is used to attach data to a visitor and manage contact creation or updates.
+
+    ### Example Request:
+    ```json
+    {
+      "email": "john.doe@gmail.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "birthday": "1989-03-03",
+      "customFields": {
+        "Designation": "Software Engineer",
+        "Age": "27",
+        "Experience": "5"
+      },
+      "tags": ["Developer", "API Team"]
+    }
+    ```
+
+    - Tags and custom fields that do not exist are created automatically.
+    - Existing tags and custom fields are updated with the new data.
+    - Properties are additive: no data is removed based on subsequent Identify calls.
+
+    ### Properties:
+    - **firstName**: `string`
+    - **lastName**: `string`
+    - **email**: `string`
+    - **newEmail**: `string` (use this to update a contact's email)
+    - **company**: `string`
+    - **birthday**: `string` (format: YYYY-MM-DD, e.g., 2016-11-21)
+    - **customFields**: `map[string]string`
+    - **tags**: `array of strings`
+
+    ## Track API Method
+    The Track API Method is used to track a contact's actions by managing tags.
+
+    ### Example Requests:
+    Add tags:
+    ```json
+    {
+      "addTags": ["blogger", "female"]
+    }
+    ```
+
+    Add and remove tags:
+    ```json
+    {
+      "addTags": ["paid user"],
+      "removeTags": ["trial user"]
+    }
+    ```
+
+    Automation rules can be triggered based on tag additions or removals, e.g.:
+    - On **user registration** tag, start onboarding drip campaigns.
+    - On **account upgrade**, start account expansion drip campaigns.
+    - On removal of the **trial user** tag, initiate upsell campaigns.
+
+    ### Response:
+    ```json
+    {
+      "status": "200",
+      "message": "OK",
+      "data": "success"
+    }
+    ```
+  name: Getting Started
+- name: Contact
+- description: Operations for managing campaigns in the system.s
+  name: Campaign
 - description: "Operations related to managing tags such as create, update, delete,\
     \ and retrieve tags."
   name: Tags
-- description: Operations for managing campaigns in the system.
-  name: Campaign
-- name: Contact
+- name: Event
 paths:
   /contact:
     get:
@@ -103,7 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectResponse'
+                $ref: '#/components/schemas/OperationResponse'
           description: Contact Created Successfully
         "401":
           description: Not Authorized
@@ -137,7 +207,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectResponse'
+                $ref: '#/components/schemas/OperationResponse'
           description: Contact deleted successfully
         "401":
           description: Not Authorized
@@ -244,7 +314,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectResponse'
+                $ref: '#/components/schemas/OperationResponse'
           description: Contact successfully unsubscribed
         "401":
           description: Not Authorized
@@ -626,7 +696,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectResponse'
+                $ref: '#/components/schemas/OperationResponse'
           description: List Updated Successfully
         "401":
           description: Not Authorized
@@ -837,7 +907,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectResponse'
+                $ref: '#/components/schemas/OperationResponse'
           description: Tag updated successfully
         "401":
           description: Not Authorized
@@ -978,6 +1048,117 @@ paths:
       summary: Create Sender
       tags:
       - Sender
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /events/custom:
+    post:
+      description: Pushes a custom event with properties and values for a specified
+        contact.
+      operationId: pushCustomEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomEventRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+          description: Custom event created successfully.
+        "400":
+          description: Invalid request parameters.
+        "500":
+          description: Internal server error.
+      summary: Push a custom event associated with a contact
+      tags:
+      - Event
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /events/revenue:
+    post:
+      description: "Records a revenue event, which can be attributed to campaigns,\
+        \ drips, workflows, or other sources of user interaction."
+      operationId: createRevenueEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevenueEventRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+          description: Revenue event recorded successfully.
+        "400":
+          description: Invalid request parameters.
+        "500":
+          description: Internal server error.
+      summary: Record a revenue event for a specific contact
+      tags:
+      - Event
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /contact/identify:
+    post:
+      description: "Identify a contact by email address. If the contact already exists,\
+        \ it will be updated."
+      operationId: identifyContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentifyRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentifyResponse'
+          description: The created Contact object
+        "400":
+          description: Invalid request parameters.
+        "500":
+          description: Internal server error.
+      summary: Identify contact
+      tags:
+      - Getting Started
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /contact/track:
+    post:
+      description: Track a contact
+      operationId: trackingContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrackRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackResponse'
+          description: The created Contact object
+        "400":
+          description: Invalid request parameters.
+        "500":
+          description: Internal server error.
+      summary: Add Tracking info
+      tags:
+      - Getting Started
       x-content-type: application/json
       x-accepts:
       - application/json
@@ -1186,7 +1367,7 @@ components:
             type: string
           type: array
       type: object
-    ObjectResponse:
+    OperationResponse:
       example:
         data: data
         message: message
@@ -1969,6 +2150,231 @@ components:
       - id
       - isWhitelisted
       - name
+      type: object
+    CustomEventRequest:
+      example:
+        identifier: john.doe@example.com
+        data:
+          price: "29.99"
+          currency: USD
+          item_count: "3"
+        name: abandoned_cart
+        time: 1669990400
+      properties:
+        name:
+          description: "Name of the custom event (e.g., 'abandoned_cart')."
+          example: abandoned_cart
+          type: string
+        identifier:
+          description: "Unique identifier for the contact (e.g., contact's email)."
+          example: john.doe@example.com
+          type: string
+        data:
+          additionalProperties:
+            type: string
+          description: "Map of property-value pairs associated with the event, where\
+            \ both key and value are strings."
+          example:
+            price: "29.99"
+            currency: USD
+            item_count: "3"
+          type: object
+        time:
+          description: Unix timestamp of when the event occurred.
+          example: 1669990400
+          type: integer
+      required:
+      - data
+      - identifier
+      - name
+      - time
+      type: object
+    EventResponse:
+      example:
+        event_id: m3m2k3mnkjn23nkj3
+        message: Event created successfully.
+        status: success
+      properties:
+        event_id:
+          description: Unique identifier for the created event.
+          example: m3m2k3mnkjn23nkj3
+          type: string
+        status:
+          description: "Status of the event creation (e.g., 'success')."
+          example: success
+          type: string
+        message:
+          description: Additional message about the event creation.
+          example: Event created successfully.
+          type: string
+      type: object
+    RevenueEventRequest:
+      example:
+        identifier: john.doe@example.com
+        amount: 123.23
+        currency: INR
+        source: app
+        time: 1669990400
+      properties:
+        identifier:
+          description: Unique identifier for the contact.
+          example: john.doe@example.com
+          type: string
+        amount:
+          description: Recognized revenue amount associated with the event.
+          example: 123.23
+          format: float
+          type: number
+        currency:
+          description: "Currency code (ISO 4217) for the revenue (e.g., 'USD', 'EUR',\
+            \ 'INR')."
+          example: INR
+          type: string
+        source:
+          description: "Source of the revenue (e.g., 'website', 'mobile app', 'partner\
+            \ referral')."
+          example: app
+          type: string
+        time:
+          description: Unix timestamp indicating when the revenue event occurred.
+          example: 1669990400
+          type: integer
+      required:
+      - amount
+      - currency
+      - identifier
+      - source
+      - time
+      type: object
+    IdentifyRequest:
+      example:
+        firstName: John
+        lastName: Doe
+        customFields:
+          favorite_color: blue
+          favorite_food: pizza
+        newEmail: user@example.com
+        company: Acme Inc.
+        email: user@example.com
+        tags:
+        - new
+        - cool
+      properties:
+        firstName:
+          description: First name of the contact.
+          example: John
+          type: string
+        lastName:
+          description: Last name of the contact.
+          example: Doe
+          type: string
+        email:
+          description: Email address of the contact.
+          example: user@example.com
+          type: string
+        newEmail:
+          description: New email address of the contact.
+          example: user@example.com
+          type: string
+        company:
+          description: Company of the contact.
+          example: Acme Inc.
+          type: string
+        tags:
+          example:
+          - new
+          - cool
+          items:
+            description: Tags of the contact.
+            type: string
+          type: array
+        customFields:
+          additionalProperties:
+            description: Custom fields of the contact.
+            type: string
+          example:
+            favorite_color: blue
+            favorite_food: pizza
+          type: object
+      required:
+      - email
+      type: object
+    IdentifyResponse:
+      example:
+        data:
+          lastName: Doe
+          customFields:
+            "1": VIP
+            "2": Special Offer Subscriber
+          created: 2024-10-08T09:30:00Z
+          dropped: false
+          lastTrackedIp: 192.168.0.1
+          bounced: false
+          LTV: 5000
+          tags:
+          - "223"
+          - "3232"
+          firstName: Jane
+          unsubscribed: false
+          contactSource: 8
+          blocked: false
+          lists:
+          - sendx123
+          - sendx233
+          company: Tech Solutions Inc.
+          id: a1b2c3d4e5
+          spam: false
+          updated: 2024-10-08T12:45:00Z
+          email: jane.doe@example.com
+        message: message
+        status: status
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/Contact'
+    TrackRequest:
+      example:
+        addTags:
+        - new
+        - cool
+        removeTags:
+        - old
+        - bad
+        email: user@example.com
+      properties:
+        email:
+          description: Email address of the contact to track.
+          example: user@example.com
+          type: string
+        addTags:
+          example:
+          - new
+          - cool
+          items:
+            description: Tags to add to the contact.
+            type: string
+          type: array
+        removeTags:
+          example:
+          - old
+          - bad
+          items:
+            description: Tags to remove from the contact.
+            type: string
+          type: array
+      type: object
+    TrackResponse:
+      example:
+        message: message
+        status: status
+      properties:
+        status:
+          type: string
+        message:
+          type: string
       type: object
     deleteCampaign_200_response:
       example:

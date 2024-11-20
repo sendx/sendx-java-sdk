@@ -37,7 +37,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>io.sendx</groupId>
   <artifactId>sendx-java-sdk</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -53,7 +53,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "io.sendx:sendx-java-sdk:1.0.0"
+     implementation "io.sendx:sendx-java-sdk:1.0.1"
   }
 ```
 
@@ -67,7 +67,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/sendx-java-sdk-1.0.0.jar`
+* `target/sendx-java-sdk-1.0.1.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -82,7 +82,7 @@ import sendx_java_sdk.ApiException;
 import sendx_java_sdk.Configuration;
 import sendx_java_sdk.auth.*;
 import sendx_java_sdk.models.*;
-import sendx_java_sdk.ContactApi;
+import sendx_java_sdk.CampaignApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -111,7 +111,7 @@ public class Example {
       OperationResponse result = apiInstance.createContact(contactRequest);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ContactApi#createContact");
+      System.err.println("Exception when calling CampaignApi#createCampaign");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -134,11 +134,15 @@ Class | Method | HTTP request | Description
 *CampaignApi* | [**getAllCampaigns**](docs/CampaignApi.md#getAllCampaigns) | **GET** /campaign | Get All Campaigns
 *CampaignApi* | [**getCampaignById**](docs/CampaignApi.md#getCampaignById) | **GET** /campaign/{campaignId} | Get Campaign By Id
 *ContactApi* | [**createContact**](docs/ContactApi.md#createContact) | **POST** /contact | Create a contact
-*ContactApi* | [**deleteContact**](docs/ContactApi.md#deleteContact) | **DELETE** /contact/{contactId} | Delete Contact
+*ContactApi* | [**deleteContact**](docs/ContactApi.md#deleteContact) | **DELETE** /contact/{identifier} | Delete Contact
 *ContactApi* | [**getAllContacts**](docs/ContactApi.md#getAllContacts) | **GET** /contact | Get All Contacts
-*ContactApi* | [**getContactById**](docs/ContactApi.md#getContactById) | **GET** /contact/{contactId} | Get Contact by ID
-*ContactApi* | [**unsubscribeContact**](docs/ContactApi.md#unsubscribeContact) | **POST** /contact/unsubscribe/{contactId} | Unsubscribe Contact
-*ContactApi* | [**updateContact**](docs/ContactApi.md#updateContact) | **PUT** /contact/{contactId} | Update Contact
+*ContactApi* | [**getContactById**](docs/ContactApi.md#getContactById) | **GET** /contact/{identifier} | Get Contact by Identifier
+*ContactApi* | [**unsubscribeContact**](docs/ContactApi.md#unsubscribeContact) | **POST** /contact/unsubscribe/{identifier} | Unsubscribe Contact
+*ContactApi* | [**updateContact**](docs/ContactApi.md#updateContact) | **PUT** /contact/{identifier} | Update Contact
+*EventApi* | [**createRevenueEvent**](docs/EventApi.md#createRevenueEvent) | **POST** /events/revenue | Record a revenue event for a specific contact
+*EventApi* | [**pushCustomEvent**](docs/EventApi.md#pushCustomEvent) | **POST** /events/custom | Push a custom event associated with a contact
+*GettingStartedApi* | [**identifyContact**](docs/GettingStartedApi.md#identifyContact) | **POST** /contact/identify | Identify contact
+*GettingStartedApi* | [**trackingContact**](docs/GettingStartedApi.md#trackingContact) | **POST** /contact/track | Add Tracking info
 *ListApi* | [**createList**](docs/ListApi.md#createList) | **POST** /list | Create List
 *ListApi* | [**deleteList**](docs/ListApi.md#deleteList) | **DELETE** /list/{listId} | Delete List
 *ListApi* | [**getAllLists**](docs/ListApi.md#getAllLists) | **GET** /list | Get All Lists
@@ -162,20 +166,27 @@ Class | Method | HTTP request | Description
  - [Contact](docs/Contact.md)
  - [ContactRequest](docs/ContactRequest.md)
  - [CreateResponse](docs/CreateResponse.md)
+ - [CustomEventRequest](docs/CustomEventRequest.md)
  - [DashboardStats](docs/DashboardStats.md)
  - [DeleteCampaign200Response](docs/DeleteCampaign200Response.md)
  - [DeleteRequest](docs/DeleteRequest.md)
  - [DeleteResponse](docs/DeleteResponse.md)
+ - [EventResponse](docs/EventResponse.md)
+ - [IdentifyRequest](docs/IdentifyRequest.md)
+ - [IdentifyResponse](docs/IdentifyResponse.md)
  - [LastSentCampaignStat](docs/LastSentCampaignStat.md)
  - [ListModel](docs/ListModel.md)
  - [ListRequest](docs/ListRequest.md)
  - [OperationResponse](docs/OperationResponse.md)
  - [ReportData](docs/ReportData.md)
+ - [RevenueEventRequest](docs/RevenueEventRequest.md)
  - [Sender](docs/Sender.md)
  - [SenderRequest](docs/SenderRequest.md)
  - [SenderResponse](docs/SenderResponse.md)
  - [Tag](docs/Tag.md)
  - [TagRequest](docs/TagRequest.md)
+ - [TrackRequest](docs/TrackRequest.md)
+ - [TrackResponse](docs/TrackResponse.md)
 
 
 <a id="documentation-for-authorization"></a>
